@@ -1,9 +1,7 @@
 # wpf-little-toolkit
 
 Some useful views, extensions and helper classes to develop WPF applications.
-Someone will be very happy with it and they would die without it.
-
-## ■Views
+Someone will be very happy with this. and someone would die without it!?
 
 ## CircleProgressView
 
@@ -19,13 +17,13 @@ Someone will be very happy with it and they would die without it.
 
 ## NumericTextBox
 
-  TextBox which accept only numbers character.
+  TextBox which accept only numeric character.
  
 ## CheckButton
 
-  A button which has the IsChecked attribute.
-  This is similar to ToggleButton, but it's IsChecked attribute will not be changed by click action but can be changed it only programatically.
-  It's useful in specal cases to handle "un-bindable property" of view for example "Play" property of MediaElement.
+  A button which has IsChecked attribute.
+  This is similar to ToggleButton, but it's IsChecked attribute will not be changed by click action but can be changed only programatically.
+  It's useful in specal situation to handle "un-bindable property" of view for example "Play" property of MediaElement.
   
 ## MenuButton
 
@@ -35,7 +33,7 @@ Someone will be very happy with it and they would die without it.
 
   Disposable wait cursor class.
   A heavy task can be executed in it's "using block" like this.
-  ```
+  ```C#
   using(WaitCuror.Start(this)) {
     HeavyTask();
   }
@@ -45,4 +43,45 @@ Someone will be very happy with it and they would die without it.
  
   A common implementation of ViewModel which support  INotifyPropertyChanged.
   This class is intended to work with [ReactiveProperty](https://github.com/runceel/ReactiveProperty), it can dispose all properties which implements IDisposable automatically.
+  
+ ## WinPlacement
+ 
+  Save and Restore the placement (position, size) of the Window.
+  
+## RectUtil
+
+  Utilities to handle Rect/Point/Size/Vector.
+  
+## JsonHelper
+
+  Support composing and parsing JSON string.
+  This is thin wrapper of System.Json, and enough to my use.
+  
+## FileDialogBuilder
+
+  This is a wrapper of Microsoft.WindowsAPICodePack.Dialogs in a "builder" pattern.
+  ```C#
+  var path = SaveFileDialogBuilder.Create()
+      .addFileType("Text", "*.txt")
+      .defaultExtension("txt")
+      .overwritePrompt(true)
+      .defaultFilename("readme")
+      .GetFilePath(this);
+  ```
+  
+  # NuGet
+  
+    io.github.toyota32k.wpfLittleToolkit
+  
+  # XAML
+  
+  ```XAML
+  <Window ...
+   xmlns:tk="clr-namespace:io.github.toyota32k.toolkit.view;assembly=io.github.toyota32k.wpfLittleToolkit"
+   ...>
+   
+   <tk:CircleProgressView.../>
+  ```
+  
+  
   
