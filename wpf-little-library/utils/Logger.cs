@@ -24,11 +24,23 @@ namespace io.github.toyota32k.toolkit.utils {
     public static class Logger {
         public static ILogTracer Tracer { get; set; } = new ConsoleLogger();
         
+        private static string safeFormat(string fmt, params object[] args) {
+            try {
+                if(args.Length>0) {
+                    return string.Format(fmt, args);
+                } else {
+                    return fmt;
+                }
+            } catch(Exception) {
+                return fmt;
+            }
+        }
+
         public static void error(string fmt, params object[] args) {
-            Tracer?.trace(LogLevel.ERROR, string.Format(fmt, args));
+            Tracer?.trace(LogLevel.ERROR, safeFormat(fmt, args));
         }
         public static void error(Exception e, string fmt, params object[] args) {
-            var msg = string.Format(fmt, args);
+            var msg = safeFormat(fmt, args);
             if(!string.IsNullOrEmpty(msg)) {
                 msg = msg + "\n" + e.ToString();
             } else {
@@ -40,14 +52,14 @@ namespace io.github.toyota32k.toolkit.utils {
             error(e, "");
         }
         public static void warn(string fmt, params object[] args) {
-            Tracer?.trace(LogLevel.WARN, string.Format(fmt, args));
+            Tracer?.trace(LogLevel.WARN, safeFormat(fmt, args));
         }
         public static void info(string fmt, params object[] args) {
-            Tracer?.trace(LogLevel.INFO, string.Format(fmt, args));
+            Tracer?.trace(LogLevel.INFO, safeFormat(fmt, args));
         }
         [Conditional("DEBUG")]
         public static void debug(string fmt, params object[] args) {
-            Tracer?.trace(LogLevel.DEBUG, string.Format(fmt, args));
+            Tracer?.trace(LogLevel.DEBUG, safeFormat(fmt, args));
         }
     }
 
@@ -55,30 +67,45 @@ namespace io.github.toyota32k.toolkit.utils {
      * 呼び出し元情報を出力する拡張ロガー
      */
     public class LoggerEx {
-        public static string composeMessage(string msg, string prefix, string memberName, int sourceLineNumber) {
-            return $"{prefix}:{memberName}({sourceLineNumber}) {msg}";
-        }
-        public static void error(string msg, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(composeMessage(msg, prefix, memberName, sourceLineNumber));
-        }
-        public static void error(Exception e, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(e, composeMessage("", prefix, memberName, sourceLineNumber));
-        }
-        public static void error(string msg, Exception e, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(e, composeMessage(msg, prefix, memberName, sourceLineNumber));
+        static string getFileName(string path) {
+            try {
+                return System.IO.Path.GetFileName(path);
+            }
+            catch (Exception) {
+                return path;
+            }
         }
 
-        public static void warn(string msg, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.warn(composeMessage(msg, prefix, memberName, sourceLineNumber));
+        public static string composeMessage(string msg, string prefix, string filePath, string memberName, int sourceLineNumber) {
+            try {
+                return $"{prefix}: {getFileName(filePath)}({sourceLineNumber}):{memberName}() {msg}";
+            } catch(Exception) {
+                Debug.Assert(false, "logging message cannot be composed.");
+                return msg;
+            }
         }
 
-        public static void info(string msg, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.info(composeMessage(msg, prefix, memberName, sourceLineNumber));
+        public static void error(string msg, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(composeMessage(msg, prefix, filePath, memberName, sourceLineNumber));
+        }
+        public static void error(Exception e, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(e, composeMessage("", prefix, filePath, memberName, sourceLineNumber));
+        }
+        public static void error(string msg, Exception e, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(e, composeMessage(msg, prefix, filePath, memberName, sourceLineNumber));
+        }
+
+        public static void warn(string msg, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.warn(composeMessage(msg, prefix, filePath, memberName, sourceLineNumber));
+        }
+
+        public static void info(string msg, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.info(composeMessage(msg, prefix, filePath, memberName, sourceLineNumber));
         }
 
         [Conditional("DEBUG")]
-        public static void debug(string msg, string prefix = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.debug(composeMessage(msg, prefix, memberName, sourceLineNumber));
+        public static void debug(string msg, string prefix = "", [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.debug(composeMessage(msg, prefix, filePath, memberName, sourceLineNumber));
         }
 
 
@@ -91,27 +118,27 @@ namespace io.github.toyota32k.toolkit.utils {
             Prefix = $"{parent.Prefix}.{prefix}";
         }
 
-        public void error(string msg, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(composeMessage(msg, Prefix, memberName, sourceLineNumber));
+        public void error(string msg, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(composeMessage(msg, Prefix, filePath, memberName, sourceLineNumber));
         }
-        public void error(Exception e, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(e, composeMessage("", Prefix, memberName, sourceLineNumber));
+        public void error(Exception e, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(e, composeMessage("", Prefix, filePath, memberName, sourceLineNumber));
         }
-        public void error(string msg, Exception e, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.error(e, composeMessage(msg, Prefix, memberName, sourceLineNumber));
-        }
-
-        public void warn(string msg, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.warn(composeMessage(msg, Prefix, memberName, sourceLineNumber));
+        public void error(string msg, Exception e, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.error(e, composeMessage(msg, Prefix, filePath, memberName, sourceLineNumber));
         }
 
-        public void info(string msg, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.info(composeMessage(msg, Prefix, memberName, sourceLineNumber));
+        public void warn(string msg, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.warn(composeMessage(msg, filePath, Prefix, memberName, sourceLineNumber));
+        }
+
+        public void info(string msg, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.info(composeMessage(msg, filePath, Prefix, memberName, sourceLineNumber));
         }
 
         [Conditional("DEBUG")]
-        public void debug(string msg, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
-            Logger.debug(composeMessage(msg, Prefix, memberName, sourceLineNumber));
+        public void debug(string msg, [CallerFilePath] string filePath = "", [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            Logger.debug(composeMessage(msg, filePath, Prefix, memberName, sourceLineNumber));
         }
     }
 

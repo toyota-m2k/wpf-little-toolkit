@@ -206,6 +206,20 @@ namespace io.github.toyota32k.toolkit.view {
             }
             return null;
         }
+
+        public List<T> GetList<T>(string name, Func<JsonValue,T>j2t) {
+            try {
+                var ja = JSONObject?[name];
+                if (null != ja && ja.JsonType == JsonType.Array) {
+                    return ((JsonArray)ja).Select(j2t).ToList();
+                }
+            }
+            catch (Exception e) {
+                Debug.WriteLine("JsonHelper GetStringList() error\n" + e.StackTrace);
+            }
+            return null;
+        }
+
         #endregion
     }
 }
