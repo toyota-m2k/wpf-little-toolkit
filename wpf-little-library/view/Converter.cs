@@ -160,7 +160,7 @@ namespace io.github.toyota32k.toolkit.view {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is DateTime) {
                 if (!DateTime.MinValue.Equals(value)) {
-                    return ((DateTime)value).ToLocalTime().ToString();
+                    return ((DateTime)value).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
                 }
             }
             return "";
