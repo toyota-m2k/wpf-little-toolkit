@@ -85,5 +85,17 @@ namespace io.github.toyota32k.toolkit.utils {
         public static bool ContainsIgnoreCase(this string s, string partialText) {
             return s.IndexOf(partialText, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
+
+        /**
+         * 文字列-->Enum変換
+         */
+        public static T ParseToEnum<T>(string name, T defValue, bool igonreCase=true) where T: struct {
+            if(Enum.TryParse<T>(name, igonreCase, out T result)) {
+                return result;
+            } 
+            else {
+                return defValue;
+            }
+        }
     }
 }
