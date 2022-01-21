@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,6 +63,10 @@ namespace io.github.toyota32k.toolkit.view {
                 }
             }
             gridView.Columns[sci].Width = Math.Max(StretchColumnMinWidth, remainingSpace);
+        }
+
+        public bool SelectItems(IEnumerable items) {
+            return SetSelectedItems(items);
         }
     }
 }
