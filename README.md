@@ -1,7 +1,7 @@
 # wpf-little-toolkit
 
 Some useful views, extensions and helper classes to develop WPF applications.
-Someone will be very happy with this. and someone would die without it!?
+Someone (<- that's me) will be a little happier with this.
 
 ## CircleProgressView
 
@@ -10,6 +10,7 @@ Someone will be very happy with this. and someone would die without it!?
 ## PathView
 
   The view drawing "SVG path" on it, similar to PathIcon in UWP.
+  (Unfortunately, I couldn't found such control in WPF enviromnent.)
   
 ## StretchListView
 
@@ -42,7 +43,7 @@ Someone will be very happy with this. and someone would die without it!?
  ## ViewModelBase
  
   A common implementation of ViewModel which support  INotifyPropertyChanged.
-  This class is intended to work with [ReactiveProperty](https://github.com/runceel/ReactiveProperty), it can dispose all properties which implements IDisposable automatically.
+  This class is intended to work with [ReactiveProperty](https://github.com/runceel/ReactiveProperty), it can dispose automatically all properties  implement IDisposable.
   
  ## WinPlacement
  
@@ -71,13 +72,13 @@ Someone will be very happy with this. and someone would die without it!?
   
   # NuGet
   
-    io.github.toyota32k.wpfLittleToolkit
+    io.github.toyota32k.wpfLittleToolkit.net6
   
   # XAML
   
   ```XAML
   <Window ...
-   xmlns:tk="clr-namespace:io.github.toyota32k.toolkit.view;assembly=io.github.toyota32k.wpfLittleToolkit"
+   xmlns:tk="clr-namespace:io.github.toyota32k.toolkit.view;assembly=io.github.toyota32k.wpfLittleToolkit.net6"
    ...>
    
    <tk:CircleProgressView.../>

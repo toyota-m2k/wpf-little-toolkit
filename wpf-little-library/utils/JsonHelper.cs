@@ -134,11 +134,11 @@ namespace io.github.toyota32k.toolkit.view {
         /**
          * Long型属性値を取得
          */
-        public long GetLong(string name) {
+        public long GetLong(string name, long defValue=0L) {
             try {
                 var v = GetValue(name);
                 if (null == v) {
-                    return 0;
+                    return defValue;
                 }
                 switch (v.JsonType) {
                     case JsonType.String:
@@ -148,31 +148,31 @@ namespace io.github.toyota32k.toolkit.view {
                     case JsonType.Boolean:
                         return (bool)v ? 1 : 0;
                     default:
-                        return 0;
+                        return defValue;
                 }
             }
             catch (Exception e) {
                 Debug.WriteLine("JsonHelper GetLong() error\n"+ e.StackTrace);
-                return 0;
+                return defValue;
             }
         }
 
         /**
          * int型属性値を取得
          */
-        public int GetInt(string name) {
-            return (int)GetLong(name);
+        public int GetInt(string name, int defValue=0) {
+            return (int)GetLong(name, (long)defValue);
         }
 
 
         /**
          * String型属性値を取得
          */
-        public string GetString(string name) {
+        public string GetString(string name, string defValue="") {
             try {
                 var v = GetValue(name);
                 if (null == v) {
-                    return "";
+                    return defValue;
                 }
                 switch (v.JsonType) {
                     case JsonType.String:
@@ -182,12 +182,12 @@ namespace io.github.toyota32k.toolkit.view {
                     case JsonType.Boolean:
                         return v ? "1" : "0";
                     default:
-                        return "";
+                        return defValue;
                 }
             }
             catch (Exception e) {
                 Debug.WriteLine("JsonHelper GetString() error\n" + e.StackTrace);
-                return "";
+                return defValue;
             }
         }
 
