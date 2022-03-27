@@ -5,7 +5,7 @@ Someone (<- that's me) will be a little happier with this.
 
 This package is for ".NET Framework". Another fork 
 https://github.com/toyota-m2k/wpf-little-toolkit-net6
-will be worked with .NET6.
+will work with .NET6.
 
 ## CircleProgressView
 
