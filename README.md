@@ -3,8 +3,7 @@
 Some useful views, extensions and helper classes to develop WPF applications.
 Someone (<- that's me) will be a little happier with this.
 
-This package is for ".NET Framework". Another fork 
-https://github.com/toyota-m2k/wpf-little-toolkit-net6
+This package is for ".NET Framework". Another fork [toyota-m2k/wpf-little-toolkit-net6](https://github.com/toyota-m2k/wpf-little-toolkit-net6)
 will work with .NET6.
 
 ## CircleProgressView
