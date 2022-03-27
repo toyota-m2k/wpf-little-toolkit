@@ -3,6 +3,10 @@
 Some useful views, extensions and helper classes to develop WPF applications.
 Someone (<- that's me) will be a little happier with this.
 
+This package is for ".NET Framework". Another fork 
+https://github.com/toyota-m2k/wpf-little-toolkit-net6
+will be worked with .NET6.
+
 ## CircleProgressView
 
   "Progress Ring" with a percent label, customizable from xaml.
@@ -70,15 +74,15 @@ Someone (<- that's me) will be a little happier with this.
       .GetFilePath(this);
   ```
   
-  # NuGet
+# NuGet
   
-    io.github.toyota32k.wpfLittleToolkit.net6
+    io.github.toyota32k.wpfLittleToolkit
   
-  # XAML
+# XAML
   
   ```XAML
   <Window ...
-   xmlns:tk="clr-namespace:io.github.toyota32k.toolkit.view;assembly=io.github.toyota32k.wpfLittleToolkit.net6"
+   xmlns:tk="clr-namespace:io.github.toyota32k.toolkit.view;assembly=io.github.toyota32k.wpfLittleToolkit"
    ...>
    
    <tk:CircleProgressView.../>
