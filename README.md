@@ -1,15 +1,21 @@
 # wpf-little-toolkit
 
 Some useful views, extensions and helper classes to develop WPF applications.
-Someone will be very happy with this. and someone would die without it!?
+Someone (<- that's me) will be a little happier with this.
+
+This package is for ".NET Framework". Another fork [toyota-m2k/wpf-little-toolkit-net6](https://github.com/toyota-m2k/wpf-little-toolkit-net6)
+will work with .NET6.
 
 ## CircleProgressView
 
   "Progress Ring" with a percent label, customizable from xaml.
- 
+  This implementation comes from [toyota-m2k/CircularProgressBar](https://github.com/toyota-m2k/CircularProgressBar).
+  The implementaton for iOS is in it, and for Android is in [toyota-m2k/android-viewex](https://github.com/toyota-m2k/android-viewex).
+
 ## PathView
 
   The view drawing "SVG path" on it, similar to PathIcon in UWP.
+  (Unfortunately, I couldn't found such control in WPF enviromnent.)
   
 ## StretchListView
 
@@ -17,7 +23,7 @@ Someone will be very happy with this. and someone would die without it!?
 
 ## NumericTextBox
 
-  TextBox which accept only numeric character.
+  TextBox which accepts only numeric character.
  
 ## CheckButton
 
@@ -42,7 +48,7 @@ Someone will be very happy with this. and someone would die without it!?
  ## ViewModelBase
  
   A common implementation of ViewModel which support  INotifyPropertyChanged.
-  This class is intended to work with [ReactiveProperty](https://github.com/runceel/ReactiveProperty), it can dispose all properties which implements IDisposable automatically.
+  This class is intended to work with [ReactiveProperty](https://github.com/runceel/ReactiveProperty), it can dispose automatically all properties  implement IDisposable.
   
  ## WinPlacement
  
@@ -69,11 +75,11 @@ Someone will be very happy with this. and someone would die without it!?
       .GetFilePath(this);
   ```
   
-  # NuGet
+# NuGet
   
     io.github.toyota32k.wpfLittleToolkit
   
-  # XAML
+# XAML
   
   ```XAML
   <Window ...
