@@ -48,13 +48,17 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\ColorUtil.cs" />
+    <Compile Include="utils\CommandProcessor.cs" />
     <Compile Include="utils\DisposablePool.cs" />
     <Compile Include="utils\FileDialogBuilder.cs" />
+    <Compile Include="utils\GenericDisposable.cs" />
+    <Compile Include="utils\JsonExt.cs" />
     <Compile Include="utils\JsonHelper.cs" />
     <Compile Include="utils\Logger.cs" />
     <Compile Include="utils\PathUtil.cs" />
     <Compile Include="utils\RectUtil.cs" />
     <Compile Include="utils\Utils.cs" />
+    <Compile Include="utils\WeakList.cs" />
     <Compile Include="utils\WinPlacement.cs" />
     <Compile Include="view\CheckButton.cs" />
     <Compile Include="view\CircleProgressView.cs" />
