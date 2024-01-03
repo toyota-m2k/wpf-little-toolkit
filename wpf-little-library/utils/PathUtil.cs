@@ -84,15 +84,21 @@ namespace io.github.toyota32k.toolkit.utils {
         public static DirectoryPathComparer directoryPathComparer => lazyDirectoryPathComparer.Value;
 
         public static string appendPathString(string orgPath, params string[] appendPaths) {
-            var result = new StringBuilder(orgPath);
-            var paths = orgPath.Split(';');
-            foreach (var ap in appendPaths.Distinct(directoryPathComparer)) {
-                var path = normalizeDirname(ap);
-                if (!paths.Where((p) => isEqualDirectoryName(path, p)).Any()) {
-                    result.Append(";").Append(path);
+            bool modified = false;
+            var source = orgPath.Split(';').Where(it => !string.IsNullOrWhiteSpace(it)).ToList();
+            foreach (string item in appendPaths.Distinct(directoryPathComparer)) {
+                string path = normalizeDirname(item);
+                if (!source.Where((string p) => isEqualDirectoryName(path, p)).Any()) {
+                    source.Add(path);
+                    modified = true;
                 }
             }
-            return result.ToString();
+            if (modified) {
+                return string.Join(";", source);
+            }
+            else {
+                return orgPath;
+            }
         }
 
         //public static string SelectFolder(Window owner, string title, string initialFolder) {
